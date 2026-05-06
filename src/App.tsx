@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useState } from 'react'
+import { type FormEvent, useEffect, useRef, useState } from 'react'
 
 import './App.css'
 
@@ -80,6 +80,8 @@ const pricing = [
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedProgram, setSelectedProgram] = useState(programs[0].title)
+  const menuToggleRef = useRef<HTMLButtonElement>(null)
+  const mobileMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     document.body.classList.toggle('menu-open', isMenuOpen)
@@ -88,13 +90,50 @@ function App() {
   }, [isMenuOpen])
 
   useEffect(() => {
+    const desktopQuery = window.matchMedia('(min-width: 980px)')
+    const closeMenuOnDesktop = () => {
+      if (desktopQuery.matches) {
+        setIsMenuOpen(false)
+      }
+    }
+
+    closeMenuOnDesktop()
+    desktopQuery.addEventListener('change', closeMenuOnDesktop)
+
+    return () => desktopQuery.removeEventListener('change', closeMenuOnDesktop)
+  }, [])
+
+  useEffect(() => {
     if (!isMenuOpen) {
       return undefined
     }
 
+    const focusableSelector = 'a[href], button:not([disabled])'
+    const focusableItems = Array.from(
+      mobileMenuRef.current?.querySelectorAll<HTMLElement>(focusableSelector) ?? [],
+    )
+    focusableItems[0]?.focus()
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setIsMenuOpen(false)
+        menuToggleRef.current?.focus()
+        return
+      }
+
+      if (event.key !== 'Tab' || focusableItems.length === 0) {
+        return
+      }
+
+      const firstItem = focusableItems[0]
+      const lastItem = focusableItems[focusableItems.length - 1]
+
+      if (event.shiftKey && document.activeElement === firstItem) {
+        event.preventDefault()
+        lastItem.focus()
+      } else if (!event.shiftKey && document.activeElement === lastItem) {
+        event.preventDefault()
+        firstItem.focus()
       }
     }
 
@@ -131,6 +170,7 @@ function App() {
           ))}
         </nav>
         <button
+          ref={menuToggleRef}
           className="menu-toggle"
           type="button"
           aria-label={isMenuOpen ? 'Закрити меню' : 'Відкрити меню'}
@@ -143,7 +183,12 @@ function App() {
         </button>
       </header>
 
-      <div className={`mobile-menu ${isMenuOpen ? 'is-open' : ''}`} id="mobile-menu" aria-hidden={!isMenuOpen}>
+      <div
+        ref={mobileMenuRef}
+        className={`mobile-menu ${isMenuOpen ? 'is-open' : ''}`}
+        id="mobile-menu"
+        aria-hidden={!isMenuOpen}
+      >
         <nav aria-label="Мобільна навігація">
           {navItems.map(([label, href]) => (
             <a href={href} key={href} onClick={closeMenu} tabIndex={isMenuOpen ? undefined : -1}>{label}</a>
@@ -168,6 +213,8 @@ function App() {
               alt="Атлет тренується з канатами у спортивному клубі"
               width="1024"
               height="1536"
+              fetchPriority="high"
+              sizes="100vw"
             />
           </div>
           <div className="hero-copy">
@@ -208,7 +255,14 @@ function App() {
           <div className="program-list">
             {programs.map((program) => (
               <article className="program-card" key={program.title}>
-                <img src={program.image} alt={program.alt} width="720" height="720" loading="lazy" />
+                <img
+                  src={program.image}
+                  alt={program.alt}
+                  width="720"
+                  height="720"
+                  loading="lazy"
+                  sizes="(min-width: 980px) 370px, (min-width: 700px) calc((100vw - 80px) / 2), (max-width: 380px) calc(100vw - 32px), 42vw"
+                />
                 <div className="program-content">
                   <p>{program.eyebrow}</p>
                   <h3>{program.title}</h3>
@@ -277,6 +331,7 @@ function App() {
               width="2048"
               height="1152"
               loading="lazy"
+              sizes="(min-width: 980px) 1180px, calc(100vw - 32px)"
             />
             <figcaption>Evening group session</figcaption>
           </figure>
