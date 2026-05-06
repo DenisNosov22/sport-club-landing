@@ -8,9 +8,11 @@ export function TrainersSection() {
         <h2 id="trainers-title">Тренери, які ведуть без зайвого тиску</h2>
       </div>
       <div className="trainer-grid">
-        {trainers.map(([focus, title, text], index) => (
-          <article className="trainer-card" key={focus}>
-            <div className="trainer-photo" aria-hidden="true">{index + 1}</div>
+        {trainers.map(({ id, focus, title, text, image, alt }) => (
+          <article className="trainer-card" key={id}>
+            <div className="trainer-photo">
+              <img src={image} alt={alt} />
+            </div>
             <div>
               <p>{focus}</p>
               <h3>{title}</h3>
