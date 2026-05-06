@@ -2,6 +2,8 @@ import { type FormEvent, useEffect, useState } from 'react'
 
 import './App.css'
 
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
+
 type Program = {
   title: string
   eyebrow: string
@@ -29,21 +31,21 @@ const programs: Program[] = [
     title: 'Сила',
     eyebrow: 'Strength',
     text: 'Базові вправи, контроль техніки і прогресія навантаження без хаосу.',
-    image: '/images/move-program-strength.jpg',
+    image: asset('images/move-program-strength.jpg'),
     alt: 'Силове тренування зі штангою',
   },
   {
     title: 'Функціонал',
     eyebrow: 'Functional',
     text: 'Комплекси на витривалість, координацію, стабільність і сильний рух.',
-    image: '/images/move-program-functional.jpg',
+    image: asset('images/move-program-functional.jpg'),
     alt: 'Функціональне тренування з мʼячем',
   },
   {
     title: 'Персональні',
     eyebrow: 'Personal',
     text: 'Індивідуальний план, гнучкий графік і уважна робота з твоєю ціллю.',
-    image: '/images/sport-program-equipment.jpg',
+    image: asset('images/sport-program-equipment.jpg'),
     alt: 'Спортивне обладнання для функціональних тренувань',
   },
 ]
@@ -83,6 +85,22 @@ function App() {
     document.body.classList.toggle('menu-open', isMenuOpen)
 
     return () => document.body.classList.remove('menu-open')
+  }, [isMenuOpen])
+
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return undefined
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMenuOpen(false)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isMenuOpen])
 
   const closeMenu = () => setIsMenuOpen(false)
@@ -128,9 +146,14 @@ function App() {
       <div className={`mobile-menu ${isMenuOpen ? 'is-open' : ''}`} id="mobile-menu" aria-hidden={!isMenuOpen}>
         <nav aria-label="Мобільна навігація">
           {navItems.map(([label, href]) => (
-            <a href={href} key={href} onClick={closeMenu}>{label}</a>
+            <a href={href} key={href} onClick={closeMenu} tabIndex={isMenuOpen ? undefined : -1}>{label}</a>
           ))}
-          <button className="button button-primary" type="button" onClick={() => scrollToTrial()}>
+          <button
+            className="button button-primary"
+            type="button"
+            onClick={() => scrollToTrial()}
+            tabIndex={isMenuOpen ? undefined : -1}
+          >
             Записатись на пробне
             <span aria-hidden="true">→</span>
           </button>
@@ -141,7 +164,7 @@ function App() {
         <section className="hero-section" aria-labelledby="hero-title">
           <div className="hero-media">
             <img
-              src="/images/move-hero-battle-ropes.jpg"
+              src={asset('images/move-hero-battle-ropes.jpg')}
               alt="Атлет тренується з канатами у спортивному клубі"
               width="1024"
               height="1536"
@@ -249,7 +272,7 @@ function App() {
           </div>
           <figure className="schedule-feature">
             <img
-              src="/images/sport-evening-training.jpg"
+              src={asset('images/sport-evening-training.jpg')}
               alt="Вечірнє групове тренування у спортивному клубі"
               width="2048"
               height="1152"
