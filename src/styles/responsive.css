@@ -10,6 +10,10 @@
 
 /* Tablet breakpoint: progressive grids and larger hero canvas. */
 @media (min-width: 700px) {
+  h1 {
+    font-size: clamp(2.95rem, 14.4vw, 7.2rem);
+  }
+
   .hero-section {
     min-height: 720px;
     padding-inline: 28px;

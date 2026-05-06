@@ -57,9 +57,11 @@ h3 {
 }
 
 h1 {
-  max-width: 7.8ch;
-  font-size: clamp(2.95rem, 14.4vw, 7.2rem);
+  max-width: min(100%, 7.8ch);
+  font-size: clamp(2.35rem, 11.6vw, 7.2rem);
   text-transform: uppercase;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 h1 span {
