@@ -1,10 +1,10 @@
 :root {
-  --color-bg: #0b0d10;
-  --color-panel: #171a1f;
+  --color-bg: #050607;
+  --color-panel: #101214;
   --color-text: #f5f3ef;
   --color-accent: #c7ff3d;
   --color-muted: #8a9099;
-  --color-soft: #d9d4c8;
+  --color-soft: #c6c9c3;
   color: var(--color-text);
   background: var(--color-bg);
   font-family:
