@@ -1,55 +1,51 @@
-/* Tablet breakpoint: two-column cards and wider gutters. */
-@media (min-width: 700px) {
-  .site-header,
-  .stats-strip,
-  .section,
-  .site-footer {
-    width: min(var(--content-max), calc(100% - var(--gutter-wide) * 2));
+@media (min-width: 420px) {
+  .stats-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .stats-strip article:last-child {
+    grid-column: auto;
+  }
+}
+
+/* Tablet breakpoint: progressive grids and larger hero canvas. */
+@media (min-width: 700px) {
   .hero-section {
     min-height: 720px;
     padding-inline: 28px;
   }
 
   .hero-media img {
-    object-position: 66% center;
+    object-position: 63% center;
   }
 
   .steps-grid,
-  .pricing-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .trainer-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
+  .pricing-grid,
+  .trainer-grid,
   .program-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .schedule-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .program-card {
-    grid-template-columns: 1fr;
     min-height: 26rem;
   }
 
   .program-card img {
-    aspect-ratio: 4 / 3;
     height: 16rem;
-    min-height: 0;
   }
 
   .program-content {
-    align-content: start;
     padding: 1.2rem 1.2rem 4.4rem;
   }
 }
 
-/* Desktop breakpoint: persistent nav, three-column sections, full schedule row. */
+/* Desktop breakpoint: persistent nav and full desktop density. */
 @media (min-width: 980px) {
   .site-header {
-    width: min(var(--content-max), calc(100% - var(--gutter-wide) * 2));
     padding-top: 28px;
   }
 
@@ -69,8 +65,8 @@
 
   .hero-media img {
     right: 0;
-    width: 66%;
-    object-position: 52% center;
+    width: 72%;
+    object-position: 56% center;
   }
 
   .hero-copy {
@@ -86,15 +82,10 @@
     align-items: center;
   }
 
-  .program-list,
+  .steps-grid,
+  .pricing-grid,
   .trainer-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .stats-strip,
-  .section,
-  .site-footer {
-    width: min(var(--content-max), calc(100% - var(--gutter-wide) * 2));
   }
 
   .section-heading {
@@ -110,10 +101,6 @@
     min-height: 18rem;
   }
 
-  .schedule-grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
   .contact-section {
     grid-template-columns: 1fr 0.82fr;
   }
@@ -124,65 +111,19 @@
   }
 }
 
-/* Narrow phones: preserve touch targets and prevent tight card copy from forcing overflow. */
-@media (max-width: 420px) {
-  .site-header,
-  .stats-strip,
-  .section,
-  .site-footer {
-    width: min(var(--content-max), calc(100% - var(--gutter) * 2));
-  }
-
-  .hero-section {
-    padding-inline: 16px;
-  }
-
-  .hero-media img {
-    object-position: 66% center;
-  }
-
-  .stats-strip {
-    gap: 0.42rem;
-  }
-
-  .stats-strip article {
-    padding-inline: 0.5rem;
-  }
-
-  .stats-strip strong {
-    font-size: 1.18rem;
-  }
-
-  .program-content {
-    padding-right: 2.9rem;
-  }
-
-  .program-content span {
-    font-size: 0.82rem;
+@media (min-width: 1100px) {
+  .schedule-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 380px) {
-  .stats-strip {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (min-width: 1180px) {
+  .hero-media img {
+    width: 66%;
+    object-position: 52% center;
   }
 
-  .stats-strip article:last-child {
-    grid-column: 1 / -1;
-  }
-
-  .program-card {
-    grid-template-columns: 1fr;
-  }
-
-  .program-card img {
-    height: auto;
-    min-height: 0;
-    aspect-ratio: 4 / 3;
-  }
-
-  .program-content {
-    align-content: start;
-    padding: 1rem 3rem 3.6rem 1rem;
+  .program-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

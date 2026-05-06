@@ -1,7 +1,5 @@
 import { type FormEvent, useCallback, useRef, useState } from 'react'
 
-import './App.css'
-import './styles/responsive.css'
 import { MobileMenu } from './components/layout/MobileMenu'
 import { SiteFooter } from './components/layout/SiteFooter'
 import { SiteHeader } from './components/layout/SiteHeader'
