@@ -1,9 +1,9 @@
 .site-shell {
   min-height: 100svh;
-  overflow-x: clip;
   background: var(--color-bg);
 }
 
+/* Shared layout containers */
 .site-header {
   position: absolute;
   top: 0;
@@ -13,7 +13,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: min(1180px, calc(100% - 32px));
+  width: min(var(--content-max), calc(100% - var(--gutter) * 2));
   margin: 0 auto;
   padding: 22px 0;
 }
@@ -191,7 +191,7 @@
 .hero-copy {
   position: relative;
   z-index: 2;
-  width: min(1180px, 100%);
+  width: min(var(--content-max), 100%);
   margin: 0 auto;
 }
 
@@ -298,7 +298,7 @@ h3 {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.55rem;
-  width: min(1180px, calc(100% - 32px));
+  width: min(var(--content-max), calc(100% - var(--gutter) * 2));
   margin: -28px auto 0;
   position: relative;
   z-index: 4;
@@ -333,7 +333,7 @@ h3 {
 }
 
 .section {
-  width: min(1180px, calc(100% - 32px));
+  width: min(var(--content-max), calc(100% - var(--gutter) * 2));
   margin: 0 auto;
   padding: clamp(3.3rem, 8vw, 5.1rem) 0;
 }
@@ -374,6 +374,21 @@ h3 {
 .schedule-grid {
   display: grid;
   gap: 0.9rem;
+}
+
+.program-list > *,
+.steps-grid > *,
+.trainer-grid > *,
+.pricing-grid > *,
+.schedule-grid > *,
+.section-heading > *,
+.contact-section > *,
+.program-content,
+.trainer-card > div,
+.pricing-card,
+.schedule-day,
+.trial-form {
+  min-width: 0;
 }
 
 .program-card {
@@ -502,7 +517,9 @@ h3 {
 
 .schedule-feature {
   position: relative;
+  aspect-ratio: 2 / 1;
   min-height: 15rem;
+  max-height: 18rem;
   margin: 0 0 0.9rem;
   overflow: hidden;
   border: 1px solid rgba(245, 243, 239, 0.12);
@@ -618,7 +635,7 @@ h3 {
 .site-footer {
   display: grid;
   gap: 1rem;
-  width: min(1180px, calc(100% - 32px));
+  width: min(var(--content-max), calc(100% - var(--gutter) * 2));
   margin: 0 auto;
   padding: 2rem 0;
   border-top: 1px solid rgba(245, 243, 239, 0.1);
@@ -632,190 +649,4 @@ select:focus-visible,
 textarea:focus-visible {
   outline: 3px solid var(--color-accent);
   outline-offset: 3px;
-}
-
-@media (min-width: 700px) {
-  .site-header,
-  .stats-strip,
-  .section,
-  .site-footer {
-    width: min(1180px, calc(100% - 56px));
-  }
-
-  .hero-section {
-    min-height: 720px;
-    padding-inline: 28px;
-  }
-
-  .hero-media img {
-    object-position: 66% center;
-  }
-
-  .steps-grid,
-  .pricing-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .trainer-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .program-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .program-card {
-    grid-template-columns: 1fr;
-    min-height: 26rem;
-  }
-
-  .program-card img {
-    aspect-ratio: 4 / 3;
-    height: 16rem;
-    min-height: 0;
-  }
-
-  .program-content {
-    align-content: start;
-    padding: 1.2rem 1.2rem 4.4rem;
-  }
-}
-
-@media (min-width: 980px) {
-  .site-header {
-    width: min(1180px, calc(100% - 64px));
-    padding-top: 28px;
-  }
-
-  .desktop-nav {
-    display: flex;
-  }
-
-  .menu-toggle,
-  .mobile-menu {
-    display: none;
-  }
-
-  .hero-section {
-    min-height: 760px;
-    padding-inline: 32px;
-  }
-
-  .hero-media img {
-    right: 0;
-    width: 66%;
-    object-position: 52% center;
-  }
-
-  .hero-copy {
-    padding-bottom: 3rem;
-  }
-
-  .hero-lead {
-    font-size: 1.18rem;
-  }
-
-  .hero-actions {
-    grid-template-columns: auto auto;
-    align-items: center;
-  }
-
-  .program-list,
-  .trainer-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .stats-strip,
-  .section,
-  .site-footer {
-    width: min(1180px, calc(100% - 64px));
-  }
-
-  .section-heading {
-    grid-template-columns: 1fr auto;
-    align-items: end;
-  }
-
-  .section-heading .eyebrow {
-    grid-column: 1 / -1;
-  }
-
-  .schedule-feature {
-    min-height: 18rem;
-  }
-
-  .schedule-grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
-  .contact-section {
-    grid-template-columns: 1fr 0.82fr;
-  }
-
-  .site-footer {
-    grid-template-columns: auto 1fr;
-    align-items: center;
-  }
-}
-
-@media (max-width: 420px) {
-  .site-header,
-  .stats-strip,
-  .section,
-  .site-footer {
-    width: min(100% - 32px, 1180px);
-  }
-
-  .hero-section {
-    padding-inline: 16px;
-  }
-
-  .hero-media img {
-    object-position: 66% center;
-  }
-
-  .stats-strip {
-    gap: 0.42rem;
-  }
-
-  .stats-strip article {
-    padding-inline: 0.5rem;
-  }
-
-  .stats-strip strong {
-    font-size: 1.18rem;
-  }
-
-  .program-content {
-    padding-right: 2.9rem;
-  }
-
-  .program-content span {
-    font-size: 0.82rem;
-  }
-}
-
-@media (max-width: 380px) {
-  .stats-strip {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .stats-strip article:last-child {
-    grid-column: 1 / -1;
-  }
-
-  .program-card {
-    grid-template-columns: 1fr;
-  }
-
-  .program-card img {
-    height: auto;
-    min-height: 0;
-    aspect-ratio: 4 / 3;
-  }
-
-  .program-content {
-    align-content: start;
-    padding: 1rem 3rem 3.6rem 1rem;
-  }
 }
